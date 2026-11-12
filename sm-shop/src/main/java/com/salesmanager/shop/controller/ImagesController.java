@@ -47,15 +47,15 @@ public class ImagesController {
 	@PostConstruct
 	public void init() {
 		try {
-			File file = ResourceUtils.getFile("classpath:static/not-found.png");
-			if(file != null) {
-				byte[] bFile = Files.readAllBytes(file.toPath());
+			org.springframework.core.io.ClassPathResource resource = new org.springframework.core.io.ClassPathResource("static/not-found.png");
+			if (resource.exists()) {
+				byte[] bFile = org.springframework.util.StreamUtils.copyToByteArray(resource.getInputStream());
 				this.tempImage = bFile;
+			} else {
+				LOGGER.info("Temporary default image static/not-found.png not found on classpath; skipping.");
 			}
-
-			
 		} catch (Exception e) {
-			LOGGER.error("Can't load temporary default image", e);
+			LOGGER.warn("Can't load temporary default image", e);
 		}
 	}
 	

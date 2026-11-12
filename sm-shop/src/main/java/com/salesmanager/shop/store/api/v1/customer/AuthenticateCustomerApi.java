@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.commons.lang3.Validate;
+import com.salesmanager.shop.store.api.exception.ServiceRuntimeException;
 import org.apache.http.auth.AuthenticationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -111,8 +112,12 @@ public class AuthenticateCustomerApi {
 			}
             
             Validate.notNull(customer.getUserName(),"Username cannot be null");
-            Validate.notNull(customer.getBilling(),"Requires customer Country code");
-            Validate.notNull(customer.getBilling().getCountry(),"Requires customer Country code");
+            if (customer.getBilling() == null) {
+                throw new ServiceRuntimeException("400", "Requires customer Country code");
+            }
+            if (customer.getBilling().getCountry() == null) {
+                throw new ServiceRuntimeException("400", "Requires customer Country code");
+            }
             
             customerFacade.registerCustomer(customer, merchantStore, language);
             
