@@ -72,8 +72,9 @@ plus the items still open. Use this to drive the next work session.
 - [ ] Rebuild admin Angular image (`npm install && npm run build` then `docker build`)
       so the store-filter default and English language code changes take effect
       (currently only the env.js runtime tweak is live).
-- [ ] Fix admin orders page 500 when selecting a store via the combobox
-      (possibly a param format issue; needs investigation).
+- [x] Diagnosed admin orders page 500: `onSelectStore` used `e.value` on a string
+      event (store-autocomplete emits the code string). Fixed to `e` (matching
+      products `choseStore`). Committed to shopizer-admin fork.
 - [ ] Seed product images so product detail page shows a real image
       (currently a placeholder icon; gallery guarded against empty array).
 
