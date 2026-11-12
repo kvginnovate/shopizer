@@ -24,7 +24,7 @@ else to wire up for the interview.
 
 | Technology | Role | Status |
 |------------|------|--------|
-| OpenSearch 1.x (via `shopizer-search-opensearch-spring-boot-starter`) | Product search index | **Not running** — `search.noindex=true` in default profile; `management.health.elasticsearch.enabled=false`. The shop has a Search page but returns no results. |
+| OpenSearch 1.x (via `shopizer-search-opensearch-spring-boot-starter`) | Product search index | **Not enabled in demo** — `search.noindex=true` in default profile; OpenSearch container can be run on 9200 but backend config (host list) needs a rebuild + `search.noindex=false` to index. Search page returns no results. |
 | | | To enable: run OpenSearch on `localhost:9200`/`9201`, set `search.noindex=false`, rebuild backend. |
 
 ## Payments (mocked in demo)
