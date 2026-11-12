@@ -515,6 +515,16 @@ public class CustomerFacadeImpl implements CustomerFacade {
       customerModel.getBilling().setCountry(country);
       if (StringUtils.isNotBlank(address.getZone())) {
         Zone zone = zoneService.getByCode(address.getZone());
+        if (zone == null && country != null) {
+          for (Zone z : zoneService.getZones(country, language)) {
+            if (z.getDescriptions() != null) {
+              for (com.salesmanager.core.model.reference.zone.ZoneDescription zd : z.getDescriptions()) {
+                if (zd.getName() != null && zd.getName().equalsIgnoreCase(address.getZone())) { zone = z; break; }
+              }
+            }
+            if (zone != null) break;
+          }
+        }
         if (zone == null) {
           throw new ConversionException("Unsuported zone code " + address.getZone());
         }
@@ -534,6 +544,16 @@ public class CustomerFacadeImpl implements CustomerFacade {
       customerModel.getDelivery().setCountry(country);
       if (StringUtils.isNotBlank(address.getZone())) {
         Zone zone = zoneService.getByCode(address.getZone());
+        if (zone == null && country != null) {
+          for (Zone z : zoneService.getZones(country, language)) {
+            if (z.getDescriptions() != null) {
+              for (com.salesmanager.core.model.reference.zone.ZoneDescription zd : z.getDescriptions()) {
+                if (zd.getName() != null && zd.getName().equalsIgnoreCase(address.getZone())) { zone = z; break; }
+              }
+            }
+            if (zone != null) break;
+          }
+        }
         if (zone == null) {
           throw new ConversionException("Unsuported zone code " + address.getZone());
         }
